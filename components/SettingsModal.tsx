@@ -179,7 +179,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, onSave, 
               <Save size={16} className="text-green-500" />
               <h3 className="text-xs font-bold uppercase text-gray-400 tracking-wider">Управление данными</h3>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-3 gap-3">
               <button
                 type="button"
                 onClick={async () => {

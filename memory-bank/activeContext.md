@@ -20,8 +20,9 @@
 - [x] Brainstorm: Backlog expanded to 100 items.
 - [x] Batch 4: PWA & Mobile (Completed).
 - [x] Batch 5: Intelligent Event Management (Completed).
-    - [x] Context Awareness (Relative dates).
-    - [x] Conflict Detection.
-    - [x] Auto-Tagging.
+- [x] Batch 6: Integrations & Data (Completed).
+    - [x] iCal Export (.ics generation).
+    - [x] iCal Import (Parsing logic).
+    - [x] UI Integration (Settings & Import Modal).
 - [ ] Planning next steps.
 

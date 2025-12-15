@@ -8,7 +8,7 @@ interface ScheduleImportModalProps {
 }
 
 const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({ isOpen, onClose, onImport }) => {
-  const [activeTab, setActiveTab] = useState<'day' | 'text'>('day');
+  const [activeTab, setActiveTab] = useState<'day' | 'text' | 'file'>('day');
   const [selectedDate, setSelectedDate] = useState(() => {
     const now = new Date();
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
@@ -64,8 +64,8 @@ const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({ isOpen, onClo
           <button
             onClick={() => setActiveTab('day')}
             className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${activeTab === 'day'
-                ? 'bg-white dark:bg-gray-700 text-indigo-600 dark:text-white shadow-sm'
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+              ? 'bg-white dark:bg-gray-700 text-indigo-600 dark:text-white shadow-sm'
+              : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
               }`}
           >
             На один день
@@ -73,11 +73,20 @@ const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({ isOpen, onClo
           <button
             onClick={() => setActiveTab('text')}
             className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${activeTab === 'text'
-                ? 'bg-white dark:bg-gray-700 text-indigo-600 dark:text-white shadow-sm'
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+              ? 'bg-white dark:bg-gray-700 text-indigo-600 dark:text-white shadow-sm'
+              : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
               }`}
           >
             Произвольный текст
+          </button>
+          <button
+            onClick={() => setActiveTab('file')}
+            className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${activeTab === 'file'
+              ? 'bg-white dark:bg-gray-700 text-indigo-600 dark:text-white shadow-sm'
+              : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+              }`}
+          >
+            Файл (.ics)
           </button>
         </div>
 
@@ -118,7 +127,7 @@ const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({ isOpen, onClo
                   </p>
                 </div>
               </div>
-            ) : (
+            ) : activeTab === 'text' ? (
               <div className="space-y-4 animate-slide-in">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center gap-2">
@@ -136,14 +145,72 @@ const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({ isOpen, onClo
                   </p>
                 </div>
               </div>
+            ) : (
+              <div className="space-y-4 animate-slide-in">
+                <div className="p-6 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl flex flex-col items-center justify-center text-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                  <div className="p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-full mb-3 text-indigo-500">
+                    <Calendar size={24} />
+                  </div>
+                  <h3 className="text-sm font-medium text-gray-800 dark:text-white mb-1">Загрузите .ics файл</h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+                    Импорт событий из Google Calendar или Outlook
+                  </p>
+                  <input
+                    type="file"
+                    accept=".ics"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      const text = await file.text();
+                      const { parseICal } = await import('../src/utils/icalParser');
+                      const { db } = await import('../services/db');
+
+                      const events = parseICal(text);
+                      if (events.length > 0) {
+                        if (confirm(`Найдено событий: ${events.length}. Импортировать?`)) {
+                          // We need to cast Partial<CalendarEvent> to Omit<CalendarEvent,'id'> for addEvents
+                          // Assuming parser returns enough data. Parser returns title and times.
+                          // Need to ensure defaults.
+                          const validEvents = events.filter(e => e.title && e.start_time).map(e => ({
+                            title: e.title!,
+                            start_time: e.start_time!,
+                            end_time: e.end_time,
+                            description: e.description || '',
+                            recurrence: 'none',
+                            reminderMinutes: 15,
+                            isAllDay: false,
+                            ...e
+                          })) as any;
+
+                          await db.addEvents(validEvents);
+                          alert('Импорт завершен!');
+                          window.location.reload();
+                        }
+                      } else {
+                        alert('Событий не найдено');
+                      }
+                    }}
+                    className="block w-full text-sm text-gray-500
+                      file:mr-4 file:py-2 file:px-4
+                      file:rounded-full file:border-0
+                      file:text-sm file:font-semibold
+                      file:bg-indigo-50 file:text-indigo-700
+                      hover:file:bg-indigo-100 dark:file:bg-indigo-900/30 dark:file:text-indigo-300
+                      cursor-pointer
+                    "
+                  />
+                </div>
+              </div>
             )}
 
-            <div className="pt-2">
-              <button type="submit" className="w-full py-3 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-200 dark:shadow-none hover:scale-[1.02]">
-                <Sparkles size={18} />
-                Распознать и добавить
-              </button>
-            </div>
+            {activeTab !== 'file' && (
+              <div className="pt-2">
+                <button type="submit" className="w-full py-3 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-200 dark:shadow-none hover:scale-[1.02]">
+                  <Sparkles size={18} />
+                  Распознать и добавить
+                </button>
+              </div>
+            )}
           </form>
         </div>
       </div>

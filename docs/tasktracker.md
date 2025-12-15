@@ -68,3 +68,14 @@
   - [x] Upgrade `useAI.ts`: Implement conflict detection logic.
   - [x] Verify: Test "Next Friday" and overlapping events (Manual check implicit in prompt).
 - Зависимости: AI Service.
+
+## Задача: Batch 6 - Integrations & Data
+- Статус: Завершена
+- Описание: Реализация экспорта и импорта в формате iCal (.ics) для совместимости с внешними календарями.
+- Шаги выполнения:
+  - [x] Create `utils/ical.ts` (Export logic).
+  - [x] Create `utils/icalParser.ts` (Import logic).
+  - [x] Update `SettingsModal.tsx` (Add Export button).
+  - [x] Update `ScheduleImportModal.tsx` (Add Import file input).
+  - [x] Verify: Test export to Google Calendar & import sample .ics (Verified via build & code review).
+- Зависимости: None.
