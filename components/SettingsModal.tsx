@@ -12,6 +12,8 @@ interface SettingsModalProps {
 
 const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, onSave, currentSettings, onInstallApp }) => {
   const [settings, setSettings] = useState<AISettings>(currentSettings);
+  const [soundsEnabled, setSoundsEnabled] = useState(() => localStorage.getItem('sounds_enabled') !== 'false');
+  const [hapticsEnabled, setHapticsEnabled] = useState(() => localStorage.getItem('haptic_enabled') !== 'false');
 
   useEffect(() => {
     setSettings(currentSettings);
@@ -22,6 +24,8 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, onSave, 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSave(settings);
+    localStorage.setItem('sounds_enabled', soundsEnabled.toString());
+    localStorage.setItem('haptic_enabled', hapticsEnabled.toString());
     onClose();
   };
 
@@ -170,6 +174,54 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, onSave, 
                 className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all dark:text-white font-mono text-sm"
                 placeholder="12345678"
               />
+            </div>
+          </div>
+
+          {/* UI Preferences Section */}
+          <div className="space-y-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-1 h-4 bg-purple-500 rounded-full" />
+              <h3 className="text-xs font-bold uppercase text-gray-400 tracking-wider">Интерфейс</h3>
+            </div>
+
+            <div className="space-y-3">
+              {/* Sound Effects Toggle */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Звуковые эффекты</label>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Звуки при действиях</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSoundsEnabled(!soundsEnabled)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${soundsEnabled ? 'bg-indigo-600' : 'bg-gray-200 dark:bg-gray-700'
+                    }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${soundsEnabled ? 'translate-x-6' : 'translate-x-1'
+                      }`}
+                  />
+                </button>
+              </div>
+
+              {/* Haptic Feedback Toggle */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Вибрация</label>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Тактильная обратная связь</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setHapticsEnabled(!hapticsEnabled)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${hapticsEnabled ? 'bg-indigo-600' : 'bg-gray-200 dark:bg-gray-700'
+                    }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${hapticsEnabled ? 'translate-x-6' : 'translate-x-1'
+                      }`}
+                  />
+                </button>
+              </div>
             </div>
           </div>
 

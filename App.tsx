@@ -23,6 +23,8 @@ import { useGamification } from './src/hooks/useGamification';
 import InstallPrompt from './components/InstallPrompt';
 import SearchBar from './components/SearchBar';
 import FilterControls from './components/FilterControls';
+import { useHaptic } from './src/hooks/useHaptic';
+import { soundManager } from './src/utils/sounds';
 
 const App: React.FC = () => {
   // State for Settings
@@ -64,6 +66,8 @@ const App: React.FC = () => {
     completeTask: completeGamifiedTask,
     currentLevelProgress
   } = useGamification();
+
+  const haptic = useHaptic();
 
   const { events, setEvents, addEvent, updateEvent, deleteEvent, toggleComplete } = useEvents(aiSettings, completeGamifiedTask);
 
@@ -196,6 +200,11 @@ const App: React.FC = () => {
           : 1
       );
       const firstEvent = newEvents[0];
+
+      // Haptic and sound feedback
+      haptic.light();
+      soundManager.create();
+
       setMessages(prev => [...prev, {
         id: Date.now().toString(),
         role: 'assistant',
@@ -204,6 +213,21 @@ const App: React.FC = () => {
       }]);
     }
     setEditingEvent(null);
+  };
+
+  // Wrapper functions with haptic and sound feedback
+  const handleToggleComplete = async (id: string | number, completed: boolean) => {
+    await toggleComplete(id, completed);
+    if (completed) {
+      haptic.success();
+      soundManager.complete();
+    }
+  };
+
+  const handleDeleteEvent = async (id: string | number) => {
+    await deleteEvent(id);
+    haptic.error();
+    soundManager.delete();
   };
 
   return (
@@ -372,12 +396,12 @@ const App: React.FC = () => {
               <EventList
                 events={filteredEvents}
                 selectedDate={isMyDayActive ? undefined : selectedDate}
-                onDelete={deleteEvent}
+                onDelete={handleDeleteEvent}
                 onEdit={(e) => {
                   setEditingEvent(e);
                   setIsCreateModalOpen(true);
                 }}
-                onToggleComplete={toggleComplete}
+                onToggleComplete={handleToggleComplete}
                 isMyDayMode={isMyDayActive}
               />
             </div>
