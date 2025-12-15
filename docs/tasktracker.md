@@ -39,3 +39,12 @@
   - [x] Update `ChatInterface` UI with Mic button and Chips.
   - [x] Connect `App.tsx` events to `ChatInterface`.
 - Зависимости: Web Speech API (Native).
+
+## Задача: Brainstorming (The "100 List")
+- Статус: Завершена
+- Описание: Expansion of improvements backlog to 100 items.
+- Шаги выполнения:
+  - [x] Analyze current 45 items.
+  - [x] Brainstorm 55 new items (Productivity, Integrations, A11y).
+  - [x] Update `improvements_backlog.md`.
+- Зависимости: None.

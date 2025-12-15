@@ -55,4 +55,67 @@
 44. **Logging**: Internal logs for debugging.
 45. **E2E Testing**: Playwright/Cypress flows.
 
-*(List will be expanded to 100...)*
+## 🚀 Productivity & Gamification
+46. **Keyboard Shortcuts**: Hotkeys for creating events (C), Chat (K), Today (T).
+47. **Markdown Support**: Rich text in event descriptions/notes.
+48. **Priority Levels**: Visual distinction for High/Medium/Low priority.
+49. **"Energy" Tags**: Tag tasks by required energy (High/Low) for better scheduling.
+50. **Gamification (XP)**: Earn XP for completing tasks, level up system.
+51. **Streaks**: Visual counter of consecutive productive days.
+52. **Badges**: Achievements for consistency (e.g., "Early Bird").
+53. **Confetti**: Animation on completing major tasks.
+54. **Focus Mode**: Hide all UI except the current task/timer.
+55. **Daily Briefing**: AI summary of the day at 8:00 AM.
+56. **"Burnout Warning"**: AI warns if schedule is too packed for too long.
+57. **Zen Mode**: Minimalist interface showing only the *next* event.
+
+## 🌐 Integrations & Data
+58. **iCal Export**: Download schedule as `.ics`.
+59. **iCal Import**: Parse `.ics` files.
+60. **Google Calendar Sync**: Two-way sync (requires API auth).
+61. **Weather Widget**: Show forecast for the day in header.
+62. **Time Zones**: Support for events in different time zones.
+63. **WebDAV Support**: Sync via Nextcloud/WebDAV.
+64. **Backup Automation**: Auto-save JSON to local storage/download weekly.
+65. **Data Encryption**: Encrypt sensitive notes locally.
+66. **Print Styles**: Optimized CSS for printing the agenda.
+67. **Share Event**: Generate a text/image summary to share.
+
+## ♿ Accessibility & Localization
+68. **Screen Reader Support**: ARIA labels for all interactive elements.
+69. **Keyboard Navigation**: Full focus management without mouse.
+70. **High Contrast Theme**: For better visibility.
+71. **Font Sizing**: User-adjustable base font size.
+72. **Localization**: Toggle between RU/EN interfaces.
+73. **24h/12h Toggle**: Time format preference.
+74. **Start of Week**: Toggle Monday/Sunday start.
+
+## 📱 Advanced Interactions
+75. **Right-Click Menu**: Quick context actions (Delete, Edit, Duplicate).
+76. **Bulk Actions**: Select multiple events to delete/move.
+77. **Duplicate Event**: Clone an event with one click.
+78. **Recurring Exceptions**: Move one instance of a recurring event.
+79. **Duration Drag**: Resize event height to change duration (Calendar View).
+80. **"Someday" List**: Backlog for tasks without specific dates.
+81. **Search Filters**: Advanced filtering (by color, tag, duration).
+82. **Undo/Redo**: Global history stack for actions.
+83. **Trash Bin**: Soft delete with restore option.
+
+## 💡 Fun & Experimental
+84. **Daily Quote**: AI-generated motivation or joke.
+85. **Sentiment Analysis**: AI analyzes your diary entries for mood tracking.
+86. **Life Balance Chart**: Visual pie chart of Event Categories (Work vs Life).
+87. **Biometric Lock**: Privacy screen requiring FaceID/TouchID (Mobile).
+88. **Custom Wallpapers**: Upload background image for the app.
+89. **Sound Themes**: "Mechanical Keyboard" or "Soft UI" sound packs.
+90. **"Time Travel"**: Visual history of past years.
+91. **Onboarding Tour**: Interactive tutorial for new users.
+92. **Changelog UI**: In-app pop-up showing new updates.
+93. **Feedback Form**: Internal form to save user suggestions.
+94. **Water Tracker**: Simple counter integrated into daily view.
+95. **Habit Streaks**: Specific visualization for repeating habits.
+96. **"Bored?" Button**: AI suggests a quick task from backlog.
+97. **Smart Reschedule**: "Move all afternoon tasks to tomorrow".
+98. **PDF Export**: Generate a beautiful PDF report of the week.
+99. **Emoji Picker**: Native emoji picker for event titles.
+100. **Credits/About**: Page listing libraries and version info.

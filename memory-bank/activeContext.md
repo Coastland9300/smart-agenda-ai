@@ -11,6 +11,11 @@
 
 ## Активные задачи
 - [x] Batch 1: UI Polish & Drag-n-Drop.
+## Активные задачи
+- [x] Batch 1: UI Polish & Drag-n-Drop.
 - [x] Batch 2: Advanced AI Providers.
 - [x] Batch 3: Smart Interactions (Voice & Chips).
-- [ ] Проверка соответствия Global Rules (Git commit, docs update).
+- [x] Проверка соответствия Global Rules (Git commit, docs update, Testing).
+- [x] Обновление `docs/DEV_PROTOCOL.md` с полным сводом правил.
+- [x] Brainstorm: Backlog expanded to 100 items.
+- [ ] Planning Batch 4: PWA & Mobile.
