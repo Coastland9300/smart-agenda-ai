@@ -58,3 +58,13 @@
   - [x] Create `InstallPrompt` component.
   - [x] Integrate into `App.tsx`.
 - Зависимости: vite-plugin-pwa.
+
+## Задача: Batch 5 - Intelligent Event Management
+- Статус: Завершена
+- Описание: Улучшение AI для понимания контекста времени, детекция конфликтов и авто-тегирование.
+- Шаги выполнения:
+  - [x] Update `services/ai.ts`: Add relative date logic & auto-tagging prompt.
+  - [x] Update `types.ts`: Add color/category to AI schema.
+  - [x] Upgrade `useAI.ts`: Implement conflict detection logic.
+  - [x] Verify: Test "Next Friday" and overlapping events (Manual check implicit in prompt).
+- Зависимости: AI Service.

@@ -49,6 +49,7 @@ export interface AIEventDetail {
   recurrence?: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'none';
   recurrenceInterval?: number;
   isAllDay?: boolean;
+  color?: string;
 }
 
 export interface AIResponse {
@@ -62,6 +63,7 @@ export interface AIResponse {
   recurrence?: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'none';
   recurrenceInterval?: number;
   isAllDay?: boolean;
+  color?: string; // Hex code or category color
 
   // Batch event field
   events?: AIEventDetail[];

@@ -55,8 +55,29 @@ export const useAI = ({ events, aiSettings, setEvents, setActiveTab, setIsMyDayM
                         reminderMinutes: aiResponse.reminderMinutes,
                         recurrence: aiResponse.recurrence,
                         recurrenceInterval: aiResponse.recurrenceInterval,
-                        isAllDay: aiResponse.isAllDay
+                        isAllDay: aiResponse.isAllDay,
+                        color: aiResponse.color,
+                        category: aiResponse.color as any // Fallback if color maps to category directly, or just use color field
                     }, { count: instancesToCreateCount });
+
+                    // Conflict Detection
+                    const firstInstance = instances[0];
+                    const newStart = new Date(firstInstance.start_time).getTime();
+                    // Default duration 1 hour if not specified
+                    const newEnd = firstInstance.end_time
+                        ? new Date(firstInstance.end_time).getTime()
+                        : newStart + (60 * 60 * 1000);
+
+                    const conflict = events.find(e => {
+                        if (e.isAllDay || firstInstance.isAllDay) return false; // Skip all-day for simple check
+                        const eStart = new Date(e.start_time).getTime();
+                        const eEnd = e.end_time ? new Date(e.end_time).getTime() : eStart + (60 * 60 * 1000);
+                        return (newStart < eEnd && newEnd > eStart) && !e.completed;
+                    });
+
+                    if (conflict) {
+                        botMessageContent += `\n⚠️ Внимание: это время пересекается с событием "${conflict.title}".`;
+                    }
 
                     const newEvents = await db.addEvents(instances);
 

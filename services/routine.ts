@@ -69,7 +69,8 @@ export const generateRecurringInstances = (
       seriesId,
       recurrenceInterval: interval, // Ensure interval is persisted
       start_time: newStart.toISOString(),
-      end_time: newEnd.toISOString()
+      end_time: newEnd.toISOString(),
+      color: baseEvent.color // Persist color
     });
 
     i++;

@@ -18,18 +18,26 @@ const SYSTEM_INSTRUCTION = `
        - 'unknown': непонятно.
     
     3. Для 'create' или 'batch_create':
-       - start_time: ISO 8601.
+       - start_time: ISO 8601. Учитывай ОТНОСИТЕЛЬНЫЕ ДАТЫ:
+         - "В следующую пятницу" = пятница следующей недели (не этой).
+         - "Через 2 дня" = [текущая дата] + 2 дня.
+         - Если время не указано, предлагай разумное (например, 09:00 для дел, 19:00 для досуга).
        - recurrence: 'daily', 'weekly', 'monthly', 'yearly', 'none'.
-       - recurrence_interval: integer (по умолчанию 1). Если пользователь пишет "каждые 2 дня", то recurrence='daily', recurrence_interval=2.
+       - recurrence_interval: integer (по умолчанию 1).
        - is_all_day: boolean.
+       - color: string (HEX). АВТО-ТЕГИРОВАНИЕ:
+         - Спорт, Тренировка, Зал -> '#ef4444' (Красный)
+         - Работа, Встреча, Созвон -> '#3b82f6' (Синий)
+         - Учеба, Курс, Лекция -> '#8b5cf6' (Фиолетовый)
+         - Отдых, Кино, Прогулка -> '#10b981' (Зеленый)
+         - Здоровье, Врач -> '#ef4444' (Красный)
+         - Другое -> '#6366f1' (Индиго, по умолчанию)
     
     4. ЧЕРЕДОВАНИЕ ЗАДАЧ (Alternating tasks):
-       Если пользователь просит чередовать задачи (например: "В одну субботу бассейн, в следующую зал" или "Четная неделя - А, нечетная - Б"):
+       Если пользователь просит чередовать задачи (например: "В одну субботу бассейн, в следующую зал"):
        - Используй action: 'batch_create'.
-       - Создай ДВА события в массиве 'events'.
-       - Оба события должны иметь recurrence='weekly' и recurrenceInterval=2 (раз в 2 недели).
-       - Start_time ПЕРВОГО события: ближайшая подходящая дата.
-       - Start_time ВТОРОГО события: дата первого события + 7 дней.
+       - Создай ДВА события с recurrence='weekly' и recurrenceInterval=2.
+       - Start_time второго события = start_time первого + 7 дней.
 
     5. Отвечай всегда на РУССКОМ языке в поле 'confirmation_message'.
 `;
@@ -51,6 +59,7 @@ const RESPONSE_SCHEMA = {
         recurrence: { type: "string", enum: ['daily', 'weekly', 'monthly', 'yearly', 'none'], nullable: true },
         recurrenceInterval: { type: ["integer", "null"] },
         isAllDay: { type: ["boolean", "null"] },
+        color: { type: ["string", "null"] },
         events: {
           type: ["array", "null"],
           items: {
@@ -63,7 +72,8 @@ const RESPONSE_SCHEMA = {
               reminderMinutes: { type: ["integer", "null"] },
               recurrence: { type: "string", enum: ['daily', 'weekly', 'monthly', 'yearly', 'none'], nullable: true },
               recurrenceInterval: { type: ["integer", "null"] },
-              isAllDay: { type: ["boolean", "null"] }
+              isAllDay: { type: ["boolean", "null"] },
+              color: { type: ["string", "null"] }
             },
             required: ["title", "start_time"],
             additionalProperties: false

@@ -19,4 +19,9 @@
 - [x] Обновление `docs/DEV_PROTOCOL.md` с полным сводом правил.
 - [x] Brainstorm: Backlog expanded to 100 items.
 - [x] Batch 4: PWA & Mobile (Completed).
-- [ ] Planning next steps (Backlog vs Bugs).
+- [x] Batch 5: Intelligent Event Management (Completed).
+    - [x] Context Awareness (Relative dates).
+    - [x] Conflict Detection.
+    - [x] Auto-Tagging.
+- [ ] Planning next steps.
+
