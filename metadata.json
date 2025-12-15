@@ -1,0 +1,5 @@
+{
+  "name": "Smart Agenda AI",
+  "description": "A smart agenda web application that uses Gemini AI to manage your schedule via natural language commands (e.g., 'Book a meeting tomorrow at 2 PM'). Features a chat interface and a real-time calendar view.",
+  "requestFramePermissions": []
+}
