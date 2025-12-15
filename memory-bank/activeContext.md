@@ -25,6 +25,8 @@
     - [x] Gamification Hook (XP, Streaks, Levels).
     - [x] UI Widgets (Header Stats).
     - [x] Event Completion Integration.
-- [ ] Planning next steps.
-- [ ] Planning next steps.
+- [x] Batch 8: Search & Filters (Completed).
+    - [x] Search Input Component.
+    - [x] Filter Controls (Category, Status, Date).
+    - [x] Integration with EventList.
 

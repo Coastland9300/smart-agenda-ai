@@ -21,6 +21,8 @@ import MobileActions from './src/components/MobileActions';
 import { usePWA } from './src/hooks/usePWA';
 import { useGamification } from './src/hooks/useGamification';
 import InstallPrompt from './components/InstallPrompt';
+import SearchBar from './components/SearchBar';
+import FilterControls from './components/FilterControls';
 
 const App: React.FC = () => {
   // State for Settings
@@ -46,6 +48,11 @@ const App: React.FC = () => {
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [editingEvent, setEditingEvent] = useState<CalendarEvent | null>(null);
+
+  // Search & Filter State
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterCategory, setFilterCategory] = useState<string | null>(null);
+  const [filterStatus, setFilterStatus] = useState<'all' | 'active' | 'completed'>('all');
 
   // Custom Hooks
   const { isDarkMode, toggleTheme } = useTheme();
@@ -103,6 +110,49 @@ const App: React.FC = () => {
         eDate.getFullYear() === selectedDate.getFullYear();
     });
   }, [events, isMyDayActive, selectedDate]);
+
+  const uniqueCategories = useMemo(() => {
+    const categories = events
+      .map(e => e.category)
+      .filter((cat): cat is NonNullable<typeof cat> => !!cat);
+    return Array.from(new Set(categories));
+  }, [events]);
+
+  // Apply search and filters
+  const filteredEvents = useMemo(() => {
+    let filtered = displayedEvents;
+
+    // Search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(e =>
+        e.title.toLowerCase().includes(query) ||
+        (e.description && e.description.toLowerCase().includes(query))
+      );
+    }
+
+    // Category filter
+    if (filterCategory) {
+      filtered = filtered.filter(e => e.category === filterCategory);
+    }
+
+    // Status filter
+    if (filterStatus === 'active') {
+      filtered = filtered.filter(e => !e.completed);
+    } else if (filterStatus === 'completed') {
+      filtered = filtered.filter(e => e.completed);
+    }
+
+    return filtered;
+  }, [displayedEvents, searchQuery, filterCategory, filterStatus]);
+
+  const hasActiveFilters = searchQuery.trim() !== '' || filterCategory !== null || filterStatus !== 'all';
+
+  const handleClearFilters = () => {
+    setSearchQuery('');
+    setFilterCategory(null);
+    setFilterStatus('all');
+  };
 
   // Handlers
   const toggleMyDayMode = () => {
@@ -265,7 +315,7 @@ const App: React.FC = () => {
                   : 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400'
                 }
               `}>
-                {displayedEvents.length}
+                {filteredEvents.length}
               </span>
             </div>
 
@@ -301,9 +351,26 @@ const App: React.FC = () => {
               </div>
             )}
 
+            {/* Search and Filters */}
+            <div className="px-6 pt-4 space-y-3">
+              <SearchBar
+                value={searchQuery}
+                onChange={setSearchQuery}
+              />
+              <FilterControls
+                categories={uniqueCategories}
+                selectedCategory={filterCategory}
+                onCategoryChange={setFilterCategory}
+                filterStatus={filterStatus}
+                onStatusChange={setFilterStatus}
+                onClearFilters={handleClearFilters}
+                hasActiveFilters={hasActiveFilters}
+              />
+            </div>
+
             <div className="flex-1 overflow-hidden bg-gray-50/30 dark:bg-gray-900/30">
               <EventList
-                events={displayedEvents}
+                events={filteredEvents}
                 selectedDate={isMyDayActive ? undefined : selectedDate}
                 onDelete={deleteEvent}
                 onEdit={(e) => {
