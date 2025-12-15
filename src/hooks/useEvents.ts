@@ -47,22 +47,23 @@ export const useEvents = (aiSettings: AISettings, onComplete?: () => void) => {
     const updateEvent = async (id: string | number, eventData: Partial<CalendarEvent>) => {
         await db.updateEvent(id, eventData);
         setEvents(prev => prev.map(e => e.id === id ? { ...e, ...eventData } : e).sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime()));
-
-        // Fetch full updated event for notification
-        const updatedEvent = { ...events.find(e => e.id === id), ...eventData } as CalendarEvent;
-        const tgMsg = formatEventForTelegram(updatedEvent, 'updated');
-        sendTelegramNotification(tgMsg, aiSettings);
     };
 
     const deleteEvent = async (id: string | number) => {
-        const eventToDelete = events.find(e => e.id === id);
+        // Soft delete: mark as deleted instead of removing
+        const deletedAt = new Date().toISOString();
+        await db.updateEvent(id, { deleted: true, deletedAt });
+        setEvents(prev => prev.map(e => e.id === id ? { ...e, deleted: true, deletedAt } : e));
+    };
+
+    const restoreEvent = async (id: string | number) => {
+        await db.updateEvent(id, { deleted: false, deletedAt: undefined });
+        setEvents(prev => prev.map(e => e.id === id ? { ...e, deleted: false, deletedAt: undefined } : e));
+    };
+
+    const permanentlyDeleteEvent = async (id: string | number) => {
         await db.deleteEvent(id);
         setEvents(prev => prev.filter(e => e.id !== id));
-
-        if (eventToDelete) {
-            const tgMsg = formatEventForTelegram(eventToDelete, 'deleted');
-            sendTelegramNotification(tgMsg, aiSettings);
-        }
     };
 
     const toggleComplete = async (id: string | number, completed: boolean) => {
@@ -79,5 +80,14 @@ export const useEvents = (aiSettings: AISettings, onComplete?: () => void) => {
         }
     };
 
-    return { events, setEvents, addEvent, updateEvent, deleteEvent, toggleComplete };
+    return {
+        events,
+        setEvents,
+        addEvent,
+        updateEvent,
+        deleteEvent,
+        restoreEvent,
+        permanentlyDeleteEvent,
+        toggleComplete
+    };
 };

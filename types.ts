@@ -27,6 +27,16 @@ export interface CalendarEvent {
   category?: 'work' | 'personal' | 'health' | 'edu' | 'other';
   color?: string;
   subtasks?: Subtask[];
+  deleted?: boolean; // Soft delete flag
+  deletedAt?: string; // ISO timestamp when deleted
+}
+
+export interface ActionHistory {
+  id: string;
+  type: 'create' | 'update' | 'delete' | 'complete';
+  timestamp: number;
+  eventSnapshot: CalendarEvent;
+  previousSnapshot?: CalendarEvent; // For updates
 }
 
 export interface ChatMessage {

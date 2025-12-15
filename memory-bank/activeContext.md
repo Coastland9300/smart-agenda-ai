@@ -44,4 +44,9 @@
     - [x] Chart Library Integration.
     - [x] Stats Calculation Logic.
     - [x] Navigation Integration.
+- [x] Batch 12: Trash Bin & Undo (Completed).
+    - [x] Update types (deleted flag, action history).
+    - [x] Trash Bin Component.
+    - [x] Undo/Redo Hook.
+    - [x] Integration.
 
