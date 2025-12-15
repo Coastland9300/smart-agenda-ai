@@ -77,38 +77,83 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, onSave, 
             </div>
 
             {settings.provider === 'google' && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Google API Key</label>
-                <input
-                  type="password"
-                  value={settings.apiKey || ''}
-                  onChange={(e) => setSettings({ ...settings, apiKey: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all dark:text-white"
-                  placeholder="AIza..."
-                />
-                <p className="text-[10px] text-gray-400 mt-1">Оставьте пустым, чтобы использовать ключ из .env</p>
-              </div>
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Google API Key</label>
+                  <input
+                    type="password"
+                    value={settings.apiKey || ''}
+                    onChange={(e) => setSettings({ ...settings, apiKey: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all dark:text-white"
+                    placeholder="AIza..."
+                  />
+                  <p className="text-[10px] text-gray-400 mt-1">Оставьте пустым, чтобы использовать ключ из .env</p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Модель</label>
+                  <input
+                    type="text"
+                    value={settings.model || 'gemini-2.0-flash-exp'}
+                    onChange={(e) => setSettings({ ...settings, model: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all dark:text-white font-mono text-sm"
+                    placeholder="gemini-2.0-flash-exp"
+                  />
+                  <p className="text-[10px] text-gray-400 mt-1">Например: gemini-2.0-flash-exp, gemini-1.5-pro</p>
+                </div>
+              </>
             )}
 
             {settings.provider === 'openrouter' && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">OpenRouter Key</label>
-                <input
-                  type="password"
-                  value={settings.apiKey || ''}
-                  onChange={(e) => setSettings({ ...settings, apiKey: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all dark:text-white"
-                  placeholder="sk-or-..."
-                />
-              </div>
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">OpenRouter Key</label>
+                  <input
+                    type="password"
+                    value={settings.apiKey || ''}
+                    onChange={(e) => setSettings({ ...settings, apiKey: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all dark:text-white"
+                    placeholder="sk-or-..."
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Модель</label>
+                  <input
+                    type="text"
+                    value={settings.model || 'openai/gpt-4o'}
+                    onChange={(e) => setSettings({ ...settings, model: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all dark:text-white font-mono text-sm"
+                    placeholder="openai/gpt-4o"
+                  />
+                  <p className="text-[10px] text-gray-400 mt-1">Например: openai/gpt-4o, anthropic/claude-3.5-sonnet</p>
+                </div>
+              </>
             )}
 
             {settings.provider === 'algion' && (
-              <div className="p-3 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl border border-indigo-100 dark:border-indigo-800/50">
-                <p className="text-xs text-indigo-700 dark:text-indigo-300">
-                  Algion использует бесплатный ключ <strong>free</strong> и модель <strong>gpt-4o</strong> по умолчанию.
-                </p>
-              </div>
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Algion API Key</label>
+                  <input
+                    type="password"
+                    value={settings.apiKey || 'free'}
+                    onChange={(e) => setSettings({ ...settings, apiKey: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all dark:text-white font-mono text-sm"
+                    placeholder="free"
+                  />
+                  <p className="text-[10px] text-gray-400 mt-1">По умолчанию: <strong>free</strong> (бесплатный ключ)</p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Модель</label>
+                  <input
+                    type="text"
+                    value={settings.model || 'gpt-4o'}
+                    onChange={(e) => setSettings({ ...settings, model: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all dark:text-white font-mono text-sm"
+                    placeholder="gpt-4o"
+                  />
+                  <p className="text-[10px] text-gray-400 mt-1">По умолчанию: <strong>gpt-4o</strong></p>
+                </div>
+              </>
             )}
           </div>
 
