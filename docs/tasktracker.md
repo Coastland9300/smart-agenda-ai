@@ -48,3 +48,13 @@
   - [x] Brainstorm 55 new items (Productivity, Integrations, A11y).
   - [x] Update `improvements_backlog.md`.
 - Зависимости: None.
+
+## Задача: Batch 4 - PWA & Mobile
+- Статус: Завершена
+- Описание: Offline Mode, Install Prompt, App Badging.
+- Шаги выполнения:
+  - [x] Configure `vite.config.ts` (Service Worker).
+  - [x] Implement `usePWA` hook.
+  - [x] Create `InstallPrompt` component.
+  - [x] Integrate into `App.tsx`.
+- Зависимости: vite-plugin-pwa.

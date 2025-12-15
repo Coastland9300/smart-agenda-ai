@@ -57,6 +57,8 @@ const Header: React.FC<HeaderProps> = ({
       >
         <Send size={20} />
       </button>
+
+
       <button
         onClick={onOpenSettings}
         className="p-3 bg-white/50 dark:bg-gray-800/50 backdrop-blur-md rounded-full shadow-lg border border-white/20 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:scale-110 transition-all duration-300 group"

@@ -18,4 +18,5 @@
 - [x] Проверка соответствия Global Rules (Git commit, docs update, Testing).
 - [x] Обновление `docs/DEV_PROTOCOL.md` с полным сводом правил.
 - [x] Brainstorm: Backlog expanded to 100 items.
-- [ ] Planning Batch 4: PWA & Mobile.
+- [x] Batch 4: PWA & Mobile (Completed).
+- [ ] Planning next steps (Backlog vs Bugs).

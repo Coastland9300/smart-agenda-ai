@@ -18,6 +18,9 @@ import Header from './src/components/Header';
 import Navigation from './src/components/Navigation';
 import MobileActions from './src/components/MobileActions';
 
+import { usePWA } from './src/hooks/usePWA';
+import InstallPrompt from './components/InstallPrompt';
+
 const App: React.FC = () => {
   // State for Settings
   const [aiSettings, setAiSettings] = useState<AISettings>(() => {
@@ -46,6 +49,22 @@ const App: React.FC = () => {
   // Custom Hooks
   const { isDarkMode, toggleTheme } = useTheme();
   const { events, setEvents, addEvent, updateEvent, deleteEvent, toggleComplete } = useEvents(aiSettings);
+
+  // Calculate incomplete tasks for today
+  const incompleteCount = useMemo(() => {
+    const today = new Date();
+    return events.filter(e => {
+      const eDate = new Date(e.start_time);
+      return !e.completed &&
+        eDate.getDate() === today.getDate() &&
+        eDate.getMonth() === today.getMonth() &&
+        eDate.getFullYear() === today.getFullYear();
+    }).length;
+  }, [events]);
+
+  const { isInstallAvailable, installApp, isInstalled } = usePWA(incompleteCount);
+  const [isInstallPromptDismissed, setIsInstallPromptDismissed] = useState(false);
+
   const { messages, setMessages, isProcessing, handleSendMessage } = useAI({
     events,
     aiSettings,
@@ -130,11 +149,19 @@ const App: React.FC = () => {
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gradient-to-br from-indigo-50 via-slate-50 to-white dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden selection:bg-indigo-100 selection:text-indigo-700 dark:selection:bg-indigo-900 dark:selection:text-white transition-colors duration-300">
 
+      {isInstallAvailable && !isInstallPromptDismissed && !isInstalled && (
+        <InstallPrompt
+          onInstall={installApp}
+          onDismiss={() => setIsInstallPromptDismissed(true)}
+        />
+      )}
+
       <SettingsModal
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
         onSave={handleSaveSettings}
         currentSettings={aiSettings}
+        onInstallApp={isInstallAvailable ? installApp : undefined}
       />
 
       <CreateEventModal

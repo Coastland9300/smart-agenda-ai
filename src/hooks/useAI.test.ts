@@ -1,4 +1,4 @@
-import { renderHook, act, waitFor } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import { useAI } from './useAI';
 import { db } from '../../services/db';
 import * as aiService from '../../services/ai';
@@ -27,7 +27,9 @@ vi.spyOn(aiService, 'parseUserIntent');
 
 describe('useAI Hook', () => {
     const mockEvents: CalendarEvent[] = [];
-    const mockAiSettings: AISettings = {};
+    const mockAiSettings: AISettings = {
+        provider: 'google'
+    };
     const mockSetEvents = vi.fn();
     const mockSetActiveTab = vi.fn();
     const mockSetIsMyDayMode = vi.fn();

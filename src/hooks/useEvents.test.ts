@@ -28,7 +28,8 @@ describe('useEvents Hook', () => {
     const mockAiSettings: AISettings = {
         telegramBotToken: 'test_token',
         telegramChatId: 'test_chat_id',
-        defaultReminderMinutes: 15
+        defaultReminderMinutes: 15,
+        provider: 'google'
     };
 
     beforeEach(() => {

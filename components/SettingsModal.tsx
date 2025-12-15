@@ -7,9 +7,10 @@ interface SettingsModalProps {
   onClose: () => void;
   onSave: (settings: AISettings) => void;
   currentSettings: AISettings;
+  onInstallApp?: () => void; // New prop for PWA install
 }
 
-const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, onSave, currentSettings }) => {
+const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, onSave, currentSettings, onInstallApp }) => {
   const [settings, setSettings] = useState<AISettings>(currentSettings);
 
   useEffect(() => {
@@ -61,8 +62,8 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, onSave, 
                     type="button"
                     onClick={() => setSettings({ ...settings, provider: p, model: p === 'algion' ? 'gpt-4o' : settings.model })}
                     className={`py-2 px-3 rounded-xl border text-sm font-medium transition-all ${settings.provider === p
-                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-200 dark:shadow-none'
-                        : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-gray-300'
+                      ? 'bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-200 dark:shadow-none'
+                      : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-gray-300'
                       }`}
                   >
                     {p === 'google' ? 'Google' : p === 'algion' ? 'Algion' : 'OpenRouter'}
@@ -127,6 +128,16 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, onSave, 
                 ))}
               </select>
             </div>
+
+            {onInstallApp && (
+              <button
+                type="button"
+                onClick={onInstallApp}
+                className="w-full py-3 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-300 rounded-xl font-bold text-sm hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors border border-indigo-100 dark:border-indigo-800/50 flex items-center justify-center gap-2"
+              >
+                📱 Установить приложение
+              </button>
+            )}
           </div>
 
           {/* Telegram Section */}
