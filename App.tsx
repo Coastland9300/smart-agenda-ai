@@ -191,6 +191,7 @@ const App: React.FC = () => {
             messages={messages}
             onSendMessage={handleSendMessage}
             isProcessing={isProcessing}
+            events={events} // Pass events for context-aware suggestions
           />
         </div>
 

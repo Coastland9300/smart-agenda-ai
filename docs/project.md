@@ -27,5 +27,21 @@ Smart Agenda AI is a Client-Side React Application interacting with Dexie.js (In
 3. **Reminders**: `App` Interval -> Check `Events` State -> Browser Notification.
 
 ## Future Improvements (Planned)
-- Extract state management into Custom Hooks or Context.
-- Decouple AI logic from the UI layer.
+## Архитектура
+- **Frontend**: React + Vite + TypeScript.
+- **State Management**: React Hooks (`useEvents`, `useAI`, `useTheme`).
+- **Database**: Dexie.js (IndexedDB wrapper) for local storage.
+- **Styling**: Tailwind CSS + Lucide React icons.
+- **AI Layer**:
+  - `services/ai.ts`: Unified service supporting:
+    - **Google GenAI** (Default).
+    - **Algion** (GPT-4o compatible).
+    - **OpenRouter** (Unified API).
+  - Web Speech API for voice input.
+- **Integrations**: Telegram Bot API (direct fetch).
+
+### Основные Компоненты
+- `CalendarView`: Drag & Drop enabled calendar grid.
+- `ChatInterface`: AI assistant with voice and suggestions.
+- `SettingsModal`: Config for AI providers and connections.
+

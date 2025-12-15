@@ -81,4 +81,10 @@ export interface AISettings {
   telegramBotToken?: string;
   telegramChatId?: string;
   defaultReminderMinutes?: number;
+
+  // AI Provider Settings
+  provider: 'google' | 'algion' | 'openrouter' | 'custom';
+  apiKey?: string; // Custom key for OpenRouter/Algion/Google
+  baseUrl?: string; // For custom/Algion
+  model?: string;   // e.g. 'gpt-4o', 'gemini-2.5-flash'
 }

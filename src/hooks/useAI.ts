@@ -37,7 +37,7 @@ export const useAI = ({ events, aiSettings, setEvents, setActiveTab, setIsMyDayM
                 `- ${e.title} at ${e.start_time} (ID: ${e.id})${e.completed ? ' [COMPLETED]' : ''}${e.isAllDay ? ' [ALL DAY]' : ''}`
             ).join('\n');
 
-            const aiResponse = await parseUserIntent(text, eventsContext);
+            const aiResponse = await parseUserIntent(text, eventsContext, aiSettings);
             let botMessageContent = aiResponse.confirmation_message;
 
             if (aiResponse.action === AIActionType.CREATE) {

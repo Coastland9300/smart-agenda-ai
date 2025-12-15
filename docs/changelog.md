@@ -20,3 +20,15 @@ All notable changes to this project will be documented in this file.
 - **Drag & Drop**: Implemented Calendar Drag & Drop using `@dnd-kit`.
 - **Event Colors & Categories**: Added `color` and `category` support to `CalendarEvent`.
 - **UI**: Added Color/Category pickers to `CreateEventModal` and indicators to `EventList`.
+
+## [2025-12-15] - Continuous Improvement (Batch 2)
+### Added
+- **Advanced AI Providers**: Added support for **Algion** (GPT-4o free) and **OpenRouter APIs**.
+- **Settings UI**: Added interface to switch between AI providers and input API keys.
+- **Service Layer**: Refactored `services/ai.ts` to support multiple backends.
+
+## [2025-12-15] - Continuous Improvement (Batch 3)
+### Added
+- **Voice Input**: Integrated Web Speech API for voice-to-text in Chat.
+- **Smart Suggestions**: Added context-aware suggestion chips (e.g., "Plan lunch", "Review day") in Chat.
+- **Interactions**: Passed event context to Chat UI for smarter local suggestions.

@@ -1,15 +1,16 @@
-# Active Context
+## Текущий фокус
+Завершили реализацию **Batch 2 (Advanced AI)** и **Batch 3 (Smart Interactions)**.
+Сейчас находимся на этапе стабилизации и проверки соответствия "Global Rules".
+Следующий шаг: Планирование Batch 4 или выбор задач из бэклога.
 
-## Current Status
-- **Date**: 2025-12-15
-- **Focus**: Continuous Improvement (Implementing the "100 List").
-- **Recent Changes**: Completed UI Polish, Testing, and Data Management.
-- **Protocol**: User runs terminal commands manually.
+## Недавние изменения
+- **AI**: Добавлена поддержка Algion и OpenRouter.
+- **UI**: Внедрены голосовой ввод и умные подсказки в чат.
+- **Settings**: Обновлен UI настроек для управления провайдерами AI.
+- **Docs**: Обновлены changelog и tasktracker.
 
-## Active Tasks
-- [ ] Populate `improvements_backlog.md` to 100 items.
-- [ ] Select first batch for implementation.
-- [ ] Maintain test coverage.
-
-## Open Questions
-- Priority: Visuals vs Logic?
+## Активные задачи
+- [x] Batch 1: UI Polish & Drag-n-Drop.
+- [x] Batch 2: Advanced AI Providers.
+- [x] Batch 3: Smart Interactions (Voice & Chips).
+- [ ] Проверка соответствия Global Rules (Git commit, docs update).

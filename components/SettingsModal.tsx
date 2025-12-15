@@ -45,6 +45,70 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, onSave, 
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
 
+          {/* AI Settings Section */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-1 h-4 bg-indigo-500 rounded-full" />
+              <h3 className="text-xs font-bold uppercase text-gray-400 tracking-wider">Настройки AI</h3>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Провайдер</label>
+              <div className="grid grid-cols-3 gap-2">
+                {(['google', 'algion', 'openrouter'] as const).map(p => (
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => setSettings({ ...settings, provider: p, model: p === 'algion' ? 'gpt-4o' : settings.model })}
+                    className={`py-2 px-3 rounded-xl border text-sm font-medium transition-all ${settings.provider === p
+                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-200 dark:shadow-none'
+                        : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-gray-300'
+                      }`}
+                  >
+                    {p === 'google' ? 'Google' : p === 'algion' ? 'Algion' : 'OpenRouter'}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {settings.provider === 'google' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Google API Key</label>
+                <input
+                  type="password"
+                  value={settings.apiKey || ''}
+                  onChange={(e) => setSettings({ ...settings, apiKey: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all dark:text-white"
+                  placeholder="AIza..."
+                />
+                <p className="text-[10px] text-gray-400 mt-1">Оставьте пустым, чтобы использовать ключ из .env</p>
+              </div>
+            )}
+
+            {settings.provider === 'openrouter' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">OpenRouter Key</label>
+                <input
+                  type="password"
+                  value={settings.apiKey || ''}
+                  onChange={(e) => setSettings({ ...settings, apiKey: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all dark:text-white"
+                  placeholder="sk-or-..."
+                />
+              </div>
+            )}
+
+            {settings.provider === 'algion' && (
+              <div className="p-3 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl border border-indigo-100 dark:border-indigo-800/50">
+                <p className="text-xs text-indigo-700 dark:text-indigo-300">
+                  Algion использует бесплатный ключ <strong>free</strong> и модель <strong>gpt-4o</strong> по умолчанию.
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div className="h-px bg-gray-100 dark:bg-gray-700 my-2" />
+
           {/* Defaults Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-1">
