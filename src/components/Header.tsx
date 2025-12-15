@@ -1,5 +1,6 @@
 import React from 'react';
 import { Coffee, Plus, Wand2, Send, Settings, Sun, Moon } from 'lucide-react';
+import GamificationStats from '../../components/GamificationStats';
 
 interface HeaderProps {
   isMyDayMode: boolean;
@@ -10,6 +11,12 @@ interface HeaderProps {
   onOpenSettings: () => void;
   isDarkMode: boolean;
   toggleTheme: () => void;
+  gamification?: {
+    level: number;
+    streak: number;
+    xpProgress: number;
+    currentXP: number;
+  };
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -20,7 +27,8 @@ const Header: React.FC<HeaderProps> = ({
   onSendAgenda,
   onOpenSettings,
   isDarkMode,
-  toggleTheme
+  toggleTheme,
+  gamification
 }) => {
   return (
     <div className="fixed top-4 right-4 z-50 flex gap-2">
@@ -35,6 +43,16 @@ const Header: React.FC<HeaderProps> = ({
       >
         <Coffee size={20} className={isMyDayMode ? "animate-pulse" : ""} />
       </button>
+
+      {gamification && (
+        <div className="hidden sm:block">
+          <GamificationStats
+            level={gamification.level}
+            streak={gamification.streak}
+            xpProgress={gamification.xpProgress}
+          />
+        </div>
+      )}
 
       <button
         onClick={onOpenCreateModal}

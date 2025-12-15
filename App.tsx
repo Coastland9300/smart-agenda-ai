@@ -19,6 +19,7 @@ import Navigation from './src/components/Navigation';
 import MobileActions from './src/components/MobileActions';
 
 import { usePWA } from './src/hooks/usePWA';
+import { useGamification } from './src/hooks/useGamification';
 import InstallPrompt from './components/InstallPrompt';
 
 const App: React.FC = () => {
@@ -48,7 +49,16 @@ const App: React.FC = () => {
 
   // Custom Hooks
   const { isDarkMode, toggleTheme } = useTheme();
-  const { events, setEvents, addEvent, updateEvent, deleteEvent, toggleComplete } = useEvents(aiSettings);
+
+  const {
+    xp,
+    level,
+    streak,
+    completeTask: completeGamifiedTask,
+    currentLevelProgress
+  } = useGamification();
+
+  const { events, setEvents, addEvent, updateEvent, deleteEvent, toggleComplete } = useEvents(aiSettings, completeGamifiedTask);
 
   // Calculate incomplete tasks for today
   const incompleteCount = useMemo(() => {
@@ -193,6 +203,12 @@ const App: React.FC = () => {
         onOpenSettings={() => setIsSettingsOpen(true)}
         isDarkMode={isDarkMode}
         toggleTheme={toggleTheme}
+        gamification={{
+          level,
+          streak,
+          xpProgress: currentLevelProgress(),
+          currentXP: xp
+        }}
       />
 
       <MobileActions

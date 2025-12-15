@@ -5,7 +5,7 @@ import { generateRecurringInstances, checkAndExtendRoutine } from '../../service
 import { formatEventForTelegram, sendTelegramNotification } from '../../services/telegram';
 import { AISettings } from '../../types';
 
-export const useEvents = (aiSettings: AISettings) => {
+export const useEvents = (aiSettings: AISettings, onComplete?: () => void) => {
     const [events, setEvents] = useState<CalendarEvent[]>([]);
     const hasCheckedRoutineRef = useRef(false);
 
@@ -70,6 +70,7 @@ export const useEvents = (aiSettings: AISettings) => {
         setEvents(prev => prev.map(e => e.id === id ? { ...e, completed } : e));
 
         if (completed) {
+            if (onComplete) onComplete();
             const event = events.find(e => e.id === id);
             if (event) {
                 const tgMsg = formatEventForTelegram({ ...event, completed: true }, 'completed');
