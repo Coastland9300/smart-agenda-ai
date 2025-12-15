@@ -34,4 +34,9 @@
     - [x] Haptic Feedback.
     - [x] Sound Effects.
     - [x] Enhanced Animations.
+- [x] Batch 10: Subtasks & Checklists (Completed).
+    - [x] Update types.ts (Subtask interface).
+    - [x] SubtaskList Component.
+    - [x] CreateEventModal Integration.
+    - [x] Progress Tracking.
 

@@ -5,6 +5,11 @@
  * @created: 2025-12-15
  */
 
+export interface Subtask {
+  id: string;
+  text: string;
+  completed: boolean;
+}
 
 export interface CalendarEvent {
   id: number | string;
@@ -21,6 +26,7 @@ export interface CalendarEvent {
   isAllDay?: boolean;
   category?: 'work' | 'personal' | 'health' | 'edu' | 'other';
   color?: string;
+  subtasks?: Subtask[];
 }
 
 export interface ChatMessage {

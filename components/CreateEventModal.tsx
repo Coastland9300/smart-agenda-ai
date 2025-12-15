@@ -7,7 +7,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { X, Save, Calendar, Clock, Type, AlignLeft, ArrowRight, Bell, Repeat, Sun, Sparkles } from 'lucide-react';
-import { CalendarEvent } from '../types';
+import { CalendarEvent, Subtask } from '../types';
+import SubtaskList from './SubtaskList';
 
 interface CreateEventModalProps {
   isOpen: boolean;
@@ -68,6 +69,7 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose, on
   const [isAllDay, setIsAllDay] = useState(false);
   const [category, setCategory] = useState<'work' | 'personal' | 'health' | 'edu' | 'other'>('other');
   const [color, setColor] = useState('#4F46E5');
+  const [subtasks, setSubtasks] = useState<Subtask[]>([]);
 
   // Reset state when modal opens
   useEffect(() => {
@@ -102,9 +104,19 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose, on
         setRecurrence('none');
         setRecurrenceInterval(1);
         setIsAllDay(false);
+        setSubtasks([]);
       }
     }
   }, [isOpen, initialData, defaultReminderMinutes]);
+
+  // Initialize subtasks from initialData
+  useEffect(() => {
+    if (isOpen && initialData?.subtasks) {
+      setSubtasks(initialData.subtasks);
+    } else if (isOpen && !initialData) {
+      setSubtasks([]);
+    }
+  }, [isOpen, initialData]);
 
   if (!isOpen) return null;
 
@@ -396,6 +408,17 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose, on
               onChange={(e) => setDescription(e.target.value)}
               className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all dark:text-white resize-none h-24"
               placeholder="Детали события..."
+            />
+          </div>
+
+          {/* Subtasks Section */}
+          <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+              Подзадачи
+            </label>
+            <SubtaskList
+              subtasks={subtasks}
+              onUpdate={setSubtasks}
             />
           </div>
 
