@@ -25,6 +25,7 @@ import SearchBar from './components/SearchBar';
 import FilterControls from './components/FilterControls';
 import { useHaptic } from './src/hooks/useHaptic';
 import { soundManager } from './src/utils/sounds';
+import AnalyticsView from './components/AnalyticsView';
 
 const App: React.FC = () => {
   // State for Settings
@@ -43,7 +44,7 @@ const App: React.FC = () => {
   };
 
   // State for Navigation/UI
-  const [activeTab, setActiveTab] = useState<'chat' | 'calendar' | 'today'>('today');
+  const [activeTab, setActiveTab] = useState<'chat' | 'calendar' | 'today' | 'analytics'>('today');
   const [isMyDayMode, setIsMyDayMode] = useState(true);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -311,6 +312,12 @@ const App: React.FC = () => {
             events={events} // Pass events for context-aware suggestions
           />
         </div>
+
+        {activeTab === 'analytics' && (
+          <div className="w-full h-full">
+            <AnalyticsView events={events} currentStreak={streak} />
+          </div>
+        )}
 
         <div className={`w-full md:w-[400px] flex flex-col h-full transition-all duration-500 
           ${(activeTab === 'calendar' || activeTab === 'today') ? 'translate-x-0 opacity-100' : 'hidden md:flex translate-x-0 opacity-100'}`}

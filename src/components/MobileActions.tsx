@@ -2,7 +2,7 @@ import React from 'react';
 import { Wand2, Plus } from 'lucide-react';
 
 interface MobileActionsProps {
-  activeTab: 'chat' | 'calendar' | 'today';
+  activeTab: 'chat' | 'calendar' | 'today' | 'analytics';
   onOpenImportModal: () => void;
   onOpenCreateModal: () => void;
 }
